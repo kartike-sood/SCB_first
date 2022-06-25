@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+
+{% block list %}
+<p> Choose the columns from the list below</p>
+
+<form action="/dataReport" method="POST">
+
+    <!-- <input list = "cars"> -->
+    <select name="input_text[]" id="input_text" multiple>
+        {% for item in list_of_columns %}
+        
+        <option value="{{item}}">{{item}}</option>
+        
+        {% endfor %}
+    </select>
+    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
+        value="Feed the columns">
+
+</form>
+
+{% endblock list %}
