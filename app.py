@@ -1,9 +1,10 @@
-from lib2to3.pgen2.pgen import DFAState
-from pickle import MEMOIZE
+# from lib2to3.pgen2.pgen import DFAState
+# from pickle import MEMOIZE
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
 import pandas as pd
+import seaborn as sns
 from pandas_profiling import ProfileReport
 df = 0
 list_of_columns = 0
@@ -55,12 +56,37 @@ def report():
         values = request.form.to_dict(flat=False)
         print(type(values))
         selected_columns = [value for key, value in values.items()][0]
-        print(selected_columns, "\n")
+        # print(selected_columns, "\n")
         df = df[selected_columns]
+
+
         report = ProfileReport(df, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         report.to_file("templates/ours.html")
 
         return render_template("ours.html")
+
+
+@app.route("/countplot", methods = ['GET', 'POST'])
+def see_cnt_plot():
+    if request.method == 'POST':
+        # column = request.form
+        values = request.form.to_dict(flat=False)
+        print(type(values))
+        selected_columns = [value for key, value in values.items()][0]
+        # print(selected_columns, "\n")
+        global df
+        df = df[selected_columns]
+
+        var = sns.countplot(x = selected_columns[0], data = df)
+        var = var.get_figure()
+
+        name = 'static/countplot.png'
+        var.savefig(name)
+
+
+        return render_template("third_page.html", list_of_columns = list_of_columns, name = name)
+
+
 
 @app.route("/")
 def home():
