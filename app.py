@@ -57,10 +57,10 @@ def report():
         print(type(values))
         selected_columns = [value for key, value in values.items()][0]
         # print(selected_columns, "\n")
-        df = df[selected_columns]
+        df2 = df[selected_columns]
 
 
-        report = ProfileReport(df, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
+        report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         report.to_file("templates/ours.html")
 
         return render_template("ours.html")
@@ -74,10 +74,10 @@ def see_cnt_plot():
         print(type(values))
         selected_columns = [value for key, value in values.items()][0]
         # print(selected_columns, "\n")
-        global df
-        df = df[selected_columns]
+        # global df
+        df2 = df[selected_columns]
 
-        var = sns.countplot(x = selected_columns[0], data = df)
+        var = sns.countplot(x = selected_columns[0], data = df2)
         var = var.get_figure()
 
         name = 'static/countplot.png'
