@@ -80,9 +80,9 @@ def see_cnt_plot():
         var = sns.countplot(x = selected_columns[0], data = df2)
         var = var.get_figure()
 
+        
+        var.savefig('static/countplot.png')
         name = 'static/countplot.png'
-        var.savefig(name)
-
 
         return render_template("third_page.html", list_of_columns = list_of_columns, name = name)
 
