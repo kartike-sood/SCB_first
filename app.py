@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import seaborn as sns
 from pandas_profiling import ProfileReport
+import matplotlib.pyplot as plt
 df = 0
 list_of_columns = 0
 app = Flask(__name__)
@@ -85,6 +86,25 @@ def see_cnt_plot():
 
         return render_template("third_page.html", list_of_columns = list_of_columns, name = name)
 
+
+@app.route('/figure_out', methods = ['GET', 'POST'])
+def graphs():
+    if request.method == 'POST':
+        values = request.form.to_dict(flat=False)
+        print(type(values))
+        selected_columns = [value for key, value in values.items()][0]
+        # print(selected_columns, "\n")
+        df2 = df[selected_columns]
+
+
+        # report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
+        # report.to_file("templates/ours.html")
+        plot1 = plt.plot(df.iloc[ : , 0], df.iloc[ : , 1])
+        plot1.savefig("static/mathplt.png")
+        # plt.show()
+
+        print("Kartike Sood")
+        return render_template("fourth_page.html", name = "static/mathplt.png")
 
 
 @app.route("/")
