@@ -60,6 +60,11 @@ def report():
         # print(selected_columns, "\n")
         df2 = df[selected_columns]
 
+        correlation1 = df2[selected_columns].corr()
+        correlation1.style.background_gradient(cmap='coolwarm').set_precision(2)
+
+        plt.matshow(correlation1)
+        plt.show()
 
         report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         report.to_file("templates/ours.html")
@@ -99,12 +104,16 @@ def graphs():
 
         # report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         # report.to_file("templates/ours.html")
-        plot1 = plt.plot(df.iloc[ : , 0], df.iloc[ : , 1])
-        plot1.savefig("static/mathplt.png")
-        # plt.show()
+        var = sns.scatterplot(x = df2.columns.to_list()[0], y = df2.columns.to_list()[1], data = df2)
+        var = var.get_figure()
+        
+        var.savefig('static/scatterplot.png')
+        name = 'static/scatterplot.png'
+        # # plt.savefig("static/mathplt.png")
+        
 
         print("Kartike Sood")
-        return render_template("fourth_page.html", name = "static/mathplt.png")
+        return render_template("fourth_page.html", list_of_columns = list_of_columns, name = name)
 
 
 @app.route("/")
