@@ -71,10 +71,12 @@ def report():
 
         return render_template("ours.html")
 
+i = 1
 
 @app.route("/countplot", methods = ['GET', 'POST'])
 def see_cnt_plot():
     if request.method == 'POST':
+        global i
         # column = request.form
         values = request.form.to_dict(flat=False)
         print(type(values))
@@ -86,15 +88,17 @@ def see_cnt_plot():
         var = sns.countplot(x = selected_columns[0], data = df2)
         var = var.get_figure()
         
-        var.savefig('static/countplot.png')
-        name = 'static/countplot.png'
+        i += 1
+        var.savefig(f'static/countplot{i}.png')
+        name = f'static/countplot{i}.png'
 
-        return render_template("third_page.html", list_of_columns = list_of_columns, name = name)
+        return render_template("third_page.html", list_of_columns = list_of_columns, name = f'static/countplot{i}.png')
 
 
 @app.route('/figure_out', methods = ['GET', 'POST'])
 def graphs():
     if request.method == 'POST':
+        global i
         values = request.form.to_dict(flat=False)
         print(type(values))
         selected_columns = [value for key, value in values.items()][0]
@@ -102,13 +106,14 @@ def graphs():
         df2 = df[selected_columns]
 
 
-        # report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
+        #   = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         # report.to_file("templates/ours.html")
         var = sns.countplot(x = df2.columns.to_list()[0], hue = df2.columns.to_list()[1], data = df2)
         var = var.get_figure()
         
-        var.savefig('static/scatterplot.png')
-        name = 'static/scatterplot.png'
+        i += 1
+        var.savefig(f'static/scatterplot{i}.png')
+        name = f'static/scatterplot{i}.png'
         # # plt.savefig("static/mathplt.png")
         
 
