@@ -60,11 +60,11 @@ def report():
         # print(selected_columns, "\n")
         df2 = df[selected_columns]
 
-        correlation1 = df2[selected_columns].corr()
-        correlation1.style.background_gradient(cmap='coolwarm').set_precision(2)
+        # correlation1 = df2[selected_columns].corr()
+        # correlation1.style.background_gradient(cmap='coolwarm').set_precision(2)
 
-        plt.matshow(correlation1)
-        plt.show()
+        # plt.matshow(correlation1)
+        # plt.show()
 
         report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         report.to_file("templates/ours.html")
@@ -104,7 +104,7 @@ def graphs():
 
         # report = ProfileReport(df2, title = "EDA Report", dark_mode = True, html = {'style' : {'full_width' : True}})
         # report.to_file("templates/ours.html")
-        var = sns.scatterplot(x = df2.columns.to_list()[0], y = df2.columns.to_list()[1], data = df2)
+        var = sns.countplot(x = df2.columns.to_list()[0], hue = df2.columns.to_list()[1], data = df2)
         var = var.get_figure()
         
         var.savefig('static/scatterplot.png')
