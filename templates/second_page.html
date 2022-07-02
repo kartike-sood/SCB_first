@@ -25,7 +25,7 @@
 <form action="/countplot" method="POST">
 
   <!-- <input list = "cars"> -->
-  <select name="input_text1[]" id="input_text1">
+  <select name="input_text1[]" id="input_text1" multiple>
       {% for item in list_of_columns %}
       
       <option value="{{item}}">{{item}}</option>
