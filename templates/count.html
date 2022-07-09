@@ -1,0 +1,30 @@
+{% extends 'second_page.html' %}
+
+
+{% block plots %}
+
+<form action="/selectcolumnsforplot" method="POST">
+
+    <!-- <input list = "cars"> -->
+    <select name="input_text2[]" id="input_text2">
+        {% for item in columns %}
+        
+        <option value="{{item}}">{{item}}</option>
+  
+        {% endfor %}
+    </select>
+    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
+        value="Select the columns you want to visualise">
+  
+</form>
+
+
+{% block plot_image %}
+
+
+    
+{% endblock plot_image %}
+
+{% endblock plots %}
+
+

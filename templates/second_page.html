@@ -15,60 +15,46 @@
         {% endfor %}
     </select>
     <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-        value="Feed the columns">
+        value="Generate the Report">
 
-</form>
-
-
-<br> <br> <br>
-
-<form action="/countplot" method="POST">
-
-  <!-- <input list = "cars"> -->
-  <select name="input_text1[]" id="input_text1">
-      {% for item in list_of_columns %}
-      
-      <option value="{{item}}">{{item}}</option>
-
-      {% endfor %}
-  </select>
-  <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-      value="See countplot">
-
-</form>
-
-<br> <br> <br>
-
-<form action="/figure_out" method="POST">
-
-    <!-- <input list = "cars"> -->
-    <select name="input_text2[]" id="input_text" multiple>
-        {% for item in list_of_columns %}
         
-        <option value="{{item}}">{{item}}</option>
-
-        {% endfor %}
-    </select>
-    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-        value="Feed the columns">
 
 </form>
 
 
-<form action="/sth" method="POST">
+<form action="/drawplots" method="POST">
 
     <!-- <input list = "cars"> -->
-    <select name="input_text[]" id="input_text">
+    <select name="input_text1[]" id="input_text1">
         {% for item in list_of_plots %}
         
         <option value="{{item}}">{{item}}</option>
-
+  
         {% endfor %}
     </select>
     <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-        value="Select the Plot">
-
+        value="Select type of plot">
+  
 </form>
+
+
+
+
+
+
+{% block plots %}
+    
+{% endblock plots %}
+
+
+
+<br> <br> <br>
+
+
+
+
+
+
 
 
 
