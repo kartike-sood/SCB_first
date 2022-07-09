@@ -95,6 +95,16 @@ def see_cnt_plot():
         return render_template("third_page.html", list_of_columns = list_of_columns, name = f'static/countplot{i}.png')
 
 
+
+
+@app.route("/sth", methods = ['GET', 'POST'])
+def plots():
+    if request.method == 'POST':
+        values = request.form
+
+
+
+
 @app.route('/figure_out', methods = ['GET', 'POST'])
 def graphs():
     if request.method == 'POST':

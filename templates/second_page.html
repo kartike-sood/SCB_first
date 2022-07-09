@@ -55,6 +55,22 @@
 </form>
 
 
+<form action="/sth" method="POST">
+
+    <!-- <input list = "cars"> -->
+    <select name="input_text[]" id="input_text">
+        {% for item in list_of_plots %}
+        
+        <option value="{{item}}">{{item}}</option>
+
+        {% endfor %}
+    </select>
+    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
+        value="Select the Plot">
+
+</form>
+
+
 
 
 {% endblock list %}
