@@ -211,10 +211,10 @@ def columnsForPlot():
 
 
 
+        name = os.path.join('static', "count.jpg")
+        plt.savefig(name)
+        # plt.savefig('static/count.jpg')
         
-
-        plt.savefig('static/count.jpg')
-        name = "static/count.jpg"
 
         return render_template("fourth_page.html", name = name, columns = list_of_columns, list_of_columns = list_of_columns, list_of_plots = list_of_plots)
 
@@ -265,7 +265,7 @@ def usergraphs():
         # elif selected_plot == "Bar Plot":
         #     list_of_categorical_columns = df.select_dtypes(include=['object']).columns.tolist()
 
-            return render_template("count.html", list_of_plots = list_of_plots, list_of_columns = list_of_columns, columns = list_of_categorical_columns)
+            # return render_template("count.html", list_of_plots = list_of_plots, list_of_columns = list_of_columns, columns = list_of_categorical_columns)
         else:
             return render_template("everyotherplot.html", list_of_plots = list_of_plots, list_of_columns = list_of_columns, columns = list_of_columns)
 
