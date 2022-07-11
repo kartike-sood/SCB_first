@@ -2,20 +2,29 @@
 
 
 {% block plots %}
-
+<div class="container" style = "float:center; margin-top:120px;margin-left:660px">
 <form action="/selectcolumnsforplot" method="POST">
 
     <!-- <input list = "cars"> -->
-    <select name="input_text1[]" id="input_text1" multiple>
+    <select name="input_text1[]" id="input_text1" style = "width: 355px;" multiple>
         {% for item in columns %}
         
         <option value="{{item}}">{{item}}</option>
   
         {% endfor %}
     </select>
-    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
+
+    <div class="container" style = "margin-top: 4px;">
+    <input type="submit" class="btn btn-outline-success btn btn-light fw-bold border-primary"
         value="Select the columns you want to visualise">
-  
+    </div>
 </form>
+</div>
+
+{% block plot_image %}
+
+
+
+{% endblock plot_image %}
 
 {% endblock plots %}

@@ -2,28 +2,55 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from pandas_profiling import ProfileReport
+
+
 
 from scipy import stats
 df = pd.read_csv("static/bankDetails.csv")
+df = df.dropna(axis = 0)
+x = df['Monthly_Income']
+y = df['Loan_Amount']
 
-"""Histogram"""
+slope, intercept = np.polyfit(x, y, 1)
+if slope > 0:
+    print(f"There is a positive regression between {} and {}")
 
+q_low = df['Monthly_Income'].quantile(0.1)
+q_hi = df['Loan_Amount'].quantile(0.8)
 
-q_low = df["Loan_Amount"].quantile(0.75)
-df_filtered = df[(df["Loan_Amount"] < q_low)]
+first = 'Loan_Amount'
+second = 'Monthly_Income'
 
-plt.hist(df_filtered['Loan_Amount'])
+df_filtered = df[(df[second] < q_hi) & (df[first] > q_low)]
+
+cat = sns.jointplot(x=first, y=second, height = 7, data=df_filtered,  kind='reg', joint_kws={'line_kws': {'color': 'black'}})
 plt.show()
+print(slope, intercept)
 
 
-# x = x[(np.abs(stats.zscore(x)) < 3).all(axis=1)]
-
-# 
-# q_hi  = df["Loan_Amount"].quantile(0.75)
-
+# report = ProfileReport(df)
+# report.to_file("for_fun.html")
+# """Histogram"""
 
 
-# # x = x[x.between(x.quantile(.25), x.quantile(.75))]
+# q_low = df["Loan_Amount"].quantile(0.25)
+# q_hi = df["Monthly_Income"].quantile(0.75)
+# df_filtered = df[(df["Loan_Amount"] > q_low) & (df['Monthly_Income'] < q_hi)]
+
+# # plt.hist(df_filtered['Loan_Amount'])
+# sns.lmplot(x="Loan_Amount", y="Monthly_Income", data=df_filtered, logistic=True, y_jitter=.03)
+# plt.show()
+
+
+# # x = x[(np.abs(stats.zscore(x)) < 3).all(axis=1)]
+
+# # 
+# # q_hi  = df["Loan_Amount"].quantile(0.75)
+
+
+
+# # # x = x[x.between(x.quantile(.25), x.quantile(.75))]
 
 # # cat = sns.catplot(x="Approved", y="Loan_Amount", hue="Gender", height=7, aspect=1, data=df, kind="violin", split=True)
 

@@ -1,49 +1,74 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 
 {% block list %}
 
-<p> Select the columns while keeping the CTRL key pressed </p>
+<br><br>
+<div class="container" style="height: 300px;overflow-y:scroll;overflow-x:scroll">
+    {{dataframe1.to_html(classes = "table table-striped") | safe}}
+</div>
 
-<form action="/dataReport" method="POST">
-
-    <!-- <input list = "cars"> -->
-    <select name="input_text[]" id="input_text" multiple>
-        {% for item in list_of_columns %}
-        
-        <option value="{{item}}">{{item}}</option>
-
-        {% endfor %}
-    </select>
-    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-        value="Generate the Report">
-
-        
-
-</form>
-
-
-<form action="/drawplots" method="POST">
-
-    <!-- <input list = "cars"> -->
-    <select name="input_text1[]" id="input_text1">
-        {% for item in list_of_plots %}
-        
-        <option value="{{item}}">{{item}}</option>
-  
-        {% endfor %}
-    </select>
-    <input type="submit" class="btn btn-outline-success btn btn-lg btn-light fw-bold border-primary"
-        value="Select type of plot">
-  
-</form>
+<br><br>
 
 
 
+<div class="container" style="margin-bottom:6px;">
+
+    <div class="container" style="margin-left:420px;float:centre">
+        <a href="/fullDataReport"><input type=”button” value="Generate Full Report" class="btn btn-primary btn-lg fw-bold border-success" ></a>
+    
+    </div>
+
+    <p> Select the columns while keeping the CTRL key pressed </p>
+
+    <form action="/dataReport" method="POST" style="float: left;width: 300px">
+
+        <!-- <input list = "cars"> -->
+        <select name="input_text[]" id="input_text" multiple>
+            {% for item in list_of_columns %}
+
+            <option value="{{item}}">{{item}}</option>
+
+            {% endfor %}
+        </select>
+
+        <br>
+        <div style="margin: 4px;">
+            <input type="submit" class="btn btn-outline-success btn  btn-light fw-bold border-primary"
+                value="Generate the Report">
+        </div>
 
 
+    </form>
+
+
+
+
+
+
+    <form action="/drawplots" method="POST" style="float: right;">
+
+        <!-- <input list = "cars"> -->
+        <select name="input_text1[]" id="input_text1" style = "width: 300px;">
+            {% for item in list_of_plots %}
+
+            <option value="{{item}}">{{item}}</option>
+
+            {% endfor %}
+        </select>
+        <br>
+        <div style="margin: 4px;">
+            <input type="submit" class="btn btn-outline-success btn btn-light fw-bold border-primary"
+                value="Select type of plot">
+        </div>
+    </form>
+
+
+
+
+</div>
 
 {% block plots %}
-    
+
 {% endblock plots %}
 
 
@@ -55,12 +80,8 @@
 
 
 
-
-
-
-
 {% endblock list %}
 
 {% block image %}
-  
+
 {% endblock image %}

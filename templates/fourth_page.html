@@ -1,8 +1,59 @@
-<p> Outside of the paragraph</p>
 {% extends 'count.html' %}
 
-<p> Ther quyick brown fox jumps over a lazy dog</p>
+
 {% block plot_image %}
-<p> Ther quyick brown fox jumps over a lazy dog</p>
-<img src="{{name}}" alt="Italian Trulli">
+
+<br> <br>
+
+
+
+
+
+
+
+
+
+<div class="container">
+
+
+
+    <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+          Toggle width collapse
+        </button>
+      </p>
+      <div style="min-height: 120px;">
+        <div class="collapse-show collapse-horizontal" id="collapseWidthExample">
+          <div class="card card-body" style="width: 300px;">
+            <p style="font-family: Sans-serif;font-size: 35px;"><b>{{total_entries}}<br>{{missing_entries}}<br>{{unique_entries}}<br>{{inference1}}</b></p>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+      
+
+    
+</div>
+<br><br>
+
+<div class="container">
+
+        <span style="float:left;margin-top:150px;height: 200px;width:250px;overflow-y:scroll;overflow-x:scroll">>
+            <p style="font-family: Sans-serif;font-size: 25px;"><b>{{my_tab.to_html(classes = "table table-striped") |
+                    safe}}</b></p>
+
+
+            </span>
+
+        <span style="float:right;">
+            <img src="{{name}}" alt="Italian Trulli" style="margin-top:5px;">
+        </span>
+
+</div>
+
 {% endblock plot_image %}
