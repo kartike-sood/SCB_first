@@ -3,6 +3,21 @@
 {% block list %}
 
 <br><br>
+
+<center>
+    <div class="container2" style="margin-bottom: 6px">
+        <div class="container2" style="float: centre;">
+            <a href="static/New_Data.csv" download><input type="”button”" value="Download The dataset"
+                    class="btn btn-primary btn-lg fw-bold border-success" /></a>
+        </div>
+        <br>
+        <br><br>
+</center>
+
+<div class="container">
+    <p style="color: green; font-size: 30px;">Sample of the Dataset <br></p>
+</div>
+
 <div class="container" style="height: 300px;overflow-y:scroll;overflow-x:scroll">
     {{dataframe1.to_html(classes = "table table-striped") | safe}}
 </div>
@@ -14,8 +29,9 @@
 <div class="container" style="margin-bottom:6px;">
 
     <div class="container" style="margin-left:420px;float:centre">
-        <a href="/fullDataReport"><input type=”button” value="Generate Full Report" class="btn btn-primary btn-lg fw-bold border-success" ></a>
-    
+        <a href="/fullDataReport"><input type=”button” value="Generate Full Report"
+                class="btn btn-primary btn-lg fw-bold border-success"></a>
+
     </div>
 
     <p> Select the columns while keeping the CTRL key pressed </p>
@@ -48,7 +64,7 @@
     <form action="/drawplots" method="POST" style="float: right;">
 
         <!-- <input list = "cars"> -->
-        <select name="input_text1[]" id="input_text1" style = "width: 300px;">
+        <select name="input_text1[]" id="input_text1" style="width: 300px;">
             {% for item in list_of_plots %}
 
             <option value="{{item}}">{{item}}</option>
@@ -71,9 +87,29 @@
 
 {% endblock plots %}
 
+{% block editcolumns %}
+    
+{% endblock editcolumns %}
+
 
 
 <br> <br> <br>
+
+
+<div class="container" style="margin-left:650px;margin-bottom: 10px;">
+    <a href="/edit_columns">
+        
+        {% if hidden != "hidden" %}
+        <input type=”button” value="Edit columns"
+            class="btn btn-primary btn-lg fw-bold border-success" style="visibility:visible;"></a>
+
+
+        
+        
+            
+        {% endif %}
+        
+</div>
 
 
 

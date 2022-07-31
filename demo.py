@@ -12,21 +12,36 @@ df = df.dropna(axis = 0)
 x = df['Monthly_Income']
 y = df['Loan_Amount']
 
-slope, intercept = np.polyfit(x, y, 1)
-if slope > 0:
-    print(f"There is a positive regression between {} and {}")
+# slope, intercept = np.polyfit(x, y, 1)
+# if slope > 0:
+#     print(f"There is a positive regression between {} and {}")
 
-q_low = df['Monthly_Income'].quantile(0.1)
-q_hi = df['Loan_Amount'].quantile(0.8)
+# q_low = df['Monthly_Income'].quantile(0.1)
+# q_hi = df['Loan_Amount'].quantile(0.8)
 
-first = 'Loan_Amount'
-second = 'Monthly_Income'
+# first = 'Loan_Amount'
+# second = 'Monthly_Income'
 
-df_filtered = df[(df[second] < q_hi) & (df[first] > q_low)]
+# df_filtered = df[(df[second] < q_hi) & (df[first] > q_low)]
 
-cat = sns.jointplot(x=first, y=second, height = 7, data=df_filtered,  kind='reg', joint_kws={'line_kws': {'color': 'black'}})
+
+var = sns.countplot(x="Approved", data=df)
+plt.xlabel("Approved")
+
+total = float(len(df))
+
+
+            # calculating percentage of different categories in the countplot
+for p in var.patches:
+    percentage = '{:.1f}%'.format(100 * p.get_height()/total)
+    x = p.get_x() + p.get_width()
+    y = p.get_height()
+    var.annotate(percentage, (x, y),ha='center')
+
 plt.show()
-print(slope, intercept)
+# cat = sns.jointplot(x=first, y=second, height = 7, data=df_filtered,  kind='reg', joint_kws={'line_kws': {'color': 'black'}})
+# plt.show()
+# print(slope, intercept)
 
 
 # report = ProfileReport(df)

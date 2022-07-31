@@ -1,0 +1,72 @@
+{% extends 'count.html' %}
+
+
+
+
+{% block editcolumns %}
+
+<div class="container">
+
+<form action="/changeDF" method="POST" style="float: left;width: 300px">
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+    <input type="text" name = "column_name" class="form-control" id="exampleFormControlInput1" placeholder="Enter your column Name here">
+</div>
+
+
+
+   
+
+        <!-- <input list = "cars"> -->
+        <select class="form-select form-select-lg mb-3" name="input_text9[]" aria-label=".form-select-lg example">
+            {% for item in list_of_columns %}
+
+            <option value="{{item}}">{{item}}</option>
+
+            {% endfor %}
+        </select>
+
+        <br>
+        
+
+
+   
+
+        <!-- <input list = "cars"> -->
+        <select class="form-select form-select-lg mb-3" name="input_text[]" aria-label=".form-select-lg example">
+            {% for item in list_of_columns %}
+
+            <option value="{{item}}">{{item}}</option>
+
+            {% endfor %}
+        </select>
+
+        <br>
+
+
+
+
+    
+  <select class="form-select form-select-lg mb-3" name = "input_text4[]" aria-label=".form-select-lg example">
+    <option selected>+(Add/concat)</option>
+    <option value="1">-(Subtract)</option>
+  </select>
+
+
+  <div style="margin: 4px;">
+    <input type="submit" class="btn btn-outline-success btn btn-light fw-bold border-primary"
+        value="Add the column">
+</div>
+
+
+
+</form>
+
+
+</div>
+
+
+
+</div>
+
+{% endblock editcolumns %}

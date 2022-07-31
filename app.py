@@ -1,5 +1,6 @@
 # from lib2to3.pgen2.pgen import DFAState
 # from pickle import MEMOIZE
+from operator import index
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
@@ -8,6 +9,7 @@ import seaborn as sns
 from pandas_profiling import ProfileReport
 import matplotlib.pyplot as plt
 import numpy as np
+import datetime
 
 FOLDER = os.path.join('static', 'plotimages')
 
@@ -62,7 +64,7 @@ def show_list_of_columns():
 
             global dataframe1
             dataframe1 = df.head(100)
-            return render_template("second_page.html", dataframe1 = dataframe1, list_of_plots=list_of_plots, list_of_columns=list_of_columns)
+            return render_template("second_page.html", hidden = "visible", dataframe1 = dataframe1, list_of_plots=list_of_plots, list_of_columns=list_of_columns)
 
 @app.route("/fullDataReport", methods = ['GET', 'POST'])
 def generateFullReport():
@@ -190,13 +192,29 @@ def columnsForPlot():
             my_tab = pd.crosstab(index=df[sc[0]], columns="Frequency", colnames = [" "])
 
 
-
+            
 
 
 
 
             var = sns.countplot(x=sc[0], data=df)
             plt.xlabel(sc[0])
+
+
+            total = float(len(df))
+
+
+            # calculating percentage of different categories in the countplot
+            for p in var.patches:
+                percentage = '{:.2f}%'.format(100 * p.get_height()/total)
+                x = p.get_x() + p.get_width()
+                y = p.get_height()
+                var.annotate(percentage, (x, y),ha='center')
+
+
+
+
+
             # plt.ylabel(sc[1])
 
         elif type_of_plot == "Violin Plot":
@@ -234,7 +252,7 @@ def columnsForPlot():
             elif slope == 0:
                 inference = f"THERE IS NO REGRESSION BETWEEN {second} AND {first}"
             
-            cat = sns.jointplot(x=first, y=second, height = 9, data=df_filtered,  kind='reg', joint_kws={'line_kws': {'color': 'black'}})
+            cat = sns.jointplot(x=first, y=second, height = 7, data=df_filtered,  kind='reg', joint_kws={'line_kws': {'color': 'black'}})
             plt.xlabel(first)
             plt.ylabel(second)
 
@@ -266,7 +284,80 @@ def columnsForPlot():
         plt.clf()
         # plt.savefig('static/count.jpg')
 
-        return render_template("fourth_page.html",my_tab = my_tab, total_entries = total_entries, missing_entries = missing_entries, unique_entries = unique_entries , inference = inference, dataframe1 = dataframe1, name=name, columns=list_of_columns, list_of_columns=list_of_columns, list_of_plots=list_of_plots)
+        return render_template("fourth_page.html",selected_plot = type_of_plot,my_tab = my_tab, total_entries = total_entries, missing_entries = missing_entries, unique_entries = unique_entries , inference1 = inference, dataframe1 = dataframe1, name=name, columns=list_of_columns, list_of_columns=list_of_columns, list_of_plots=list_of_plots)
+
+
+
+@app.route("/edit_columns", methods = {'GET', 'POST'})
+def edit():
+    return render_template("edit_columns.html", hidden = "hidden", dataframe1 = dataframe1, list_of_plots=list_of_plots, list_of_columns=list_of_columns, columns=list_of_categorical_columns)
+
+
+
+@app.route("/changeDF", methods = {'GET', 'POST'})
+def changeDF():
+    global df
+    if request.method == "POST":
+
+
+        values = request.form.to_dict(flat=False)
+        print(values)
+        # print(selected_columns)
+
+        sc = [value for key, value in values.items()]
+        print(sc)
+        if sc[3][0] == '+(Add/concat)':
+            newCol = df[sc[1][0]] + df[sc[2][0]]
+            df.insert(1, sc[0][0], newCol)
+        # df_changed = df[]
+        else:
+            newCol = df[sc[1][0]] - df[sc[2][0]]
+            df.insert(1, sc[0][0], newCol)
+
+        df.to_csv("static/New_Data.csv", index=False)
+        dataframe1 = df.head(100)
+
+    return render_template("second_page.html", hidden = "visible", dataframe1 = dataframe1, list_of_plots=list_of_plots, list_of_columns=list_of_columns)
+
+
+
+# @app.route("/newfunc", methods=['GET', 'POST'])
+# def deriveAge():
+
+#     if request.method == 'POST':
+#         values = request.form.to_dict(flat=False)
+#         sc = [value for key, value in values.items()][0]
+#         col_name = sc[0]
+
+
+#         global summ
+#         global count
+#         age = []
+
+#         year = datetime.datetime.today().year
+
+#         for ele in df[sc[0]]:
+            
+#             if type(ele) == str:
+#                 temp = int(ele.split('/')[-1])
+
+#                 temp = temp % 100
+
+#                 if temp <= 30:
+#                     temp += 2000
+#                 else:
+#                     temp += 1900
+
+#                 temp  = year - temp
+#                 age.append(temp)
+
+#                 count += 1
+#                 summ += temp
+#             else:
+#                 age.append(-1)
+
+#         df.insert(0, col_name, age)
+#         return render_template()
 
 
 @app.route("/drawplots", methods=['GET', 'POST'])
